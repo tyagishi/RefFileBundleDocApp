@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3697DB642BBD056000279CDD /* RefFileBundleDocAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB632BBD056000279CDD /* RefFileBundleDocAppApp.swift */; };
-		3697DB662BBD056000279CDD /* RefFileBundleDocAppDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB652BBD056000279CDD /* RefFileBundleDocAppDocument.swift */; };
+		3697DB662BBD056000279CDD /* RefFileBundleDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB652BBD056000279CDD /* RefFileBundleDocument.swift */; };
 		3697DB682BBD056000279CDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB672BBD056000279CDD /* ContentView.swift */; };
 		3697DB6A2BBD056200279CDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3697DB692BBD056200279CDD /* Assets.xcassets */; };
 		3697DB6F2BBD056200279CDD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3697DB6E2BBD056200279CDD /* Preview Assets.xcassets */; };
@@ -17,7 +17,7 @@
 /* Begin PBXFileReference section */
 		3697DB602BBD056000279CDD /* RefFileBundleDocApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefFileBundleDocApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3697DB632BBD056000279CDD /* RefFileBundleDocAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefFileBundleDocAppApp.swift; sourceTree = "<group>"; };
-		3697DB652BBD056000279CDD /* RefFileBundleDocAppDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefFileBundleDocAppDocument.swift; sourceTree = "<group>"; };
+		3697DB652BBD056000279CDD /* RefFileBundleDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefFileBundleDocument.swift; sourceTree = "<group>"; };
 		3697DB672BBD056000279CDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3697DB692BBD056200279CDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3697DB6B2BBD056200279CDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				3697DB632BBD056000279CDD /* RefFileBundleDocAppApp.swift */,
-				3697DB652BBD056000279CDD /* RefFileBundleDocAppDocument.swift */,
+				3697DB652BBD056000279CDD /* RefFileBundleDocument.swift */,
 				3697DB672BBD056000279CDD /* ContentView.swift */,
 				3697DB692BBD056200279CDD /* Assets.xcassets */,
 				3697DB6B2BBD056200279CDD /* Info.plist */,
@@ -145,7 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3697DB642BBD056000279CDD /* RefFileBundleDocAppApp.swift in Sources */,
-				3697DB662BBD056000279CDD /* RefFileBundleDocAppDocument.swift in Sources */,
+				3697DB662BBD056000279CDD /* RefFileBundleDocument.swift in Sources */,
 				3697DB682BBD056000279CDD /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
