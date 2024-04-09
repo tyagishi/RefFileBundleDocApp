@@ -46,7 +46,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
         guard let text1Data = text1FileWrapper.regularFileContents,
               let text1 = String(data: text1Data, encoding: .utf8),
               let text2Data = text2FileWrapper.regularFileContents,
-              let text2 = String(data: text2Data, encoding: .utf8) else { fatalError("strange document content")}
+              let text2 = String(data: text2Data, encoding: .utf8) else { fatalError("strange document content") }
         
         self.text1 = text1
         self.text2 = text2
