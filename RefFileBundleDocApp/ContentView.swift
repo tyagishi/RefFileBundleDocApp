@@ -12,8 +12,12 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Text(document.text1)
-            Text(document.text2)
+            TextField(text: $document.text1, label: {
+                Text("Text1: ")
+            })
+            TextField(text: $document.text2, label: {
+                Text("Text2: ")
+            })
         }
     }
 }

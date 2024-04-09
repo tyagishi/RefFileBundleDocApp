@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct RefFileBundleDocAppApp: App {
+struct RefFileBundleDocApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: { RefFileBundleDocument.init() } , editor: { config in
             ContentView(document: config.document)

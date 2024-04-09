@@ -7,6 +7,12 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
+import OSLog
+
+extension OSLog {
+    public static var log = Logger(subsystem: "com.smalldesksoftware.reffilebundoedocapp", category: "refdoc")
+    // public static var log = Logger(.disabled)
+}
 
 extension UTType {
     static var refFileBundle: UTType {
@@ -18,7 +24,9 @@ class RefFileBundleDocument: ReferenceFileDocument {
     var text1: String = "Text1"
     var text2: String = "Text2"
 
-    init() { }
+    init() {
+        OSLog.log.debug(#function)
+    }
 
     static var readableContentTypes: [UTType] { [.refFileBundle] }
     typealias Snapshot = [String]
@@ -26,6 +34,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
     static let text2Key = "Text2Key.txt"
 
     required init(configuration: ReadConfiguration) throws {
+        OSLog.log.debug(#function)
         let rootFileWrapper = configuration.file
         
         // check structure
@@ -44,10 +53,12 @@ class RefFileBundleDocument: ReferenceFileDocument {
     }
 
     func snapshot(contentType: UTType) throws -> [String] {
+        OSLog.log.debug(#function)
         return [text1, text2]
     }
     
     func fileWrapper(snapshot: [String], configuration: WriteConfiguration) throws -> FileWrapper {
+        OSLog.log.debug(#function)
         guard snapshot.count == 2 else { fatalError("strange snapshot") }
 
         // prep data
