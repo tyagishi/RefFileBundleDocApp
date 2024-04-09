@@ -10,8 +10,8 @@ import UniformTypeIdentifiers
 import OSLog
 
 extension OSLog {
-    public static var log = Logger(subsystem: "com.smalldesksoftware.reffilebundoedocapp", category: "refdoc")
-    // public static var log = Logger(.disabled)
+    fileprivate static var log = Logger(subsystem: "com.smalldesksoftware.reffilebundoedocapp", category: "refdoc")
+    // fileprivate static var log = Logger(.disabled)
 }
 
 extension UTType {
