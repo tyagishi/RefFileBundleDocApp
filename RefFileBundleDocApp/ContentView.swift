@@ -20,9 +20,13 @@ struct ContentView: View {
             }), label: {
                 Text("Text1: ")
             })
-//            TextField(text: $document.text2, label: {
-//                Text("Text2: ")
-//            })
+            TextField(text: Binding<String>(get: {
+                document.text2
+            }, set: {
+                document.text2 = $0
+            }), label: {
+                Text("Text2: ")
+            })
         }
     }
 }
@@ -35,13 +39,25 @@ extension RefFileBundleDocument {
     var node1: TreeNode<FileSystemItem>? {
         rootNode.search(match: { $0.filename == Self.text1Key })
     }
+    var node2: TreeNode<FileSystemItem>? {
+        rootNode.search(match: { $0.filename == Self.text2Key })
+    }
     var text1: String {
         get {
             node1?.text ?? "No Node1"
         }
         set(newValue) {
             guard let node1 = node1 else { return }
-            node1.value.setText(newValue)
+            node1.text = newValue
+        }
+    }
+    var text2: String {
+        get {
+            node2?.text ?? "No Node1"
+        }
+        set(newValue) {
+            guard let node2 = node2 else { return }
+            node2.text = newValue
         }
     }
 }

@@ -32,9 +32,10 @@ class RefFileBundleDocument: ReferenceFileDocument {
     init() {
         OSLog.log.debug(#function)
         
-        rootNode = TreeNode(value: .init(directory: "root", nil))
-        rootNode.addChildwithFileWrapper(TreeNode(value: .init(filename: Self.text1Key, text: "HelloText1", nil)))
-        rootNode.addChildwithFileWrapper(TreeNode(value: .init(filename: Self.text2Key, text: "WorldText2", nil)))
+        rootNode = TreeNode(value: .init(directory: "root"))
+        rootNode.initRootDirAsFileSystemItem("root")
+        rootNode.addTextFile(fileName: Self.text1Key, text: "HelloText1")
+        rootNode.addTextFile(fileName: Self.text2Key, text: "WorldText2")
     }
 
     required init(configuration: ReadConfiguration) throws {
@@ -44,15 +45,18 @@ class RefFileBundleDocument: ReferenceFileDocument {
         let rootFileWrapper = configuration.file
         guard rootFileWrapper.isDirectory else { fatalError("unknown document struct, root should be directory") }
 
-        rootNode = TreeNode(value: .init(directory: "root", rootFileWrapper))
+        rootNode = TreeNode(value: .init(directory: "root"))
+        rootNode.initRootDirAsFileSystemItem("root")
         
         guard let childFileWrappers = rootFileWrapper.fileWrappers else { return } // only top directory
         
         for key in childFileWrappers.keys {
             guard let childFileWrapper = childFileWrappers[key] else { continue }
-            guard let textData = childFileWrapper.regularFileContents,
-                  let text = String(data: textData, encoding: .utf8) else { continue }
-            rootNode.addChild(TreeNode(value: .init(filename: key, text: text, childFileWrapper)))
+            if key.hasSuffix(".txt"),
+               let textData = childFileWrapper.regularFileContents,
+               let text = String(data: textData, encoding: .utf8) {
+                rootNode.addTextFile(fileName: key, text: text)
+            }
         }
     }
 
@@ -63,19 +67,11 @@ class RefFileBundleDocument: ReferenceFileDocument {
     
     func fileWrapper(snapshot: TreeNode<FileSystemItem>, configuration: WriteConfiguration) throws -> FileWrapper {
         OSLog.log.debug(#function)
-        let rootFileWrapper = rootNode.value.fileWrapper
+        
+        rootNode.updateFileWrapper()
+        
+        let rootFileWrapper = rootNode.fileWrapper
 
-        for child in rootNode.children {
-            let fileItem = child.value
-            
-            if case .txtFile(_, let data) = fileItem.content,
-               let fwData = fileItem.fileWrapper.regularFileContents,
-                   fwData != data {
-                let newFileWrapper = FileWrapper(regularFileWithContents: data)
-                newFileWrapper.preferredFilename = fileItem.filename
-                rootNode.replaceChildFileWrapper(child, newFileWrapper: newFileWrapper)
-            }
-        }
         return rootFileWrapper
     }
 }

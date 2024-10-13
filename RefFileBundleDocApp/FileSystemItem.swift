@@ -24,52 +24,25 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
     }
     
     var content: FileData
-    var fileWrapper: FileWrapper
 
-    init(directory dirname: String,_ fileWrapper: FileWrapper?) {
+    init(directory dirname: String) {
         self.type = .directory
         self.content = .directory
         self.filename = dirname
-        if let fileWrapper = fileWrapper {
-            self.fileWrapper =  fileWrapper
-        } else {
-            self.fileWrapper = FileWrapper(directoryWithFileWrappers: [:])
-            self.fileWrapper.preferredFilename = dirname
-        }
     }
 
-    init(filename: String, text: String,_ fileWrapper: FileWrapper?) {
+    init(filename: String, text: String) {
         self.type = .txtFile
         self.filename = filename
         self.content = .txtFile(text, text.data(using: .utf8)!)
-        if let fileWrapper = fileWrapper {
-            self.fileWrapper =  fileWrapper
-        } else {
-            self.fileWrapper = FileWrapper(regularFileWithContents: text.data(using: .utf8)!)
-            self.fileWrapper.preferredFilename = filename
-        }
     }
     
-    init(filename: String, data: Data,_ fileWrapper: FileWrapper?) {
+    init(filename: String, data: Data) {
         self.type = .binFile
         self.filename = filename
         self.content = .binFile(data)
-        if let fileWrapper = fileWrapper {
-            self.fileWrapper =  fileWrapper
-        } else {
-            self.fileWrapper = FileWrapper(regularFileWithContents: data)
-            self.fileWrapper.preferredFilename = filename
-        }
     }
-    
-//    var newFileWrapper: FileWrapper {
-//        switch self.content {
-//        case .directory: return FileWrapper(directoryWithFileWrappers: [:])
-//        case .txtFile(_, let data), .binFile(let data):
-//            return FileWrapper(regularFileWithContents: data)
-//        }
-//    }
-    
+
     func setText(_ newText: String) {
         self.content = .txtFile(newText, newText.data(using: .utf8)!)
     }
