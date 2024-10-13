@@ -53,7 +53,7 @@ extension RefFileBundleDocument {
     }
     var text2: String {
         get {
-            node2?.text ?? "No Node1"
+            node2?.text ?? "No Node2"
         }
         set(newValue) {
             guard let node2 = node2 else { return }

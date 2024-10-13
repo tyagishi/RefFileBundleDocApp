@@ -9,17 +9,58 @@ import Foundation
 import SDSDataStructure
 
 extension TreeNode where T == FileSystemItem {
+    var isDirectory: Bool { self.value.content.isDirectory }
+    var isTextFile: Bool { self.value.content.isTxtFile }
+    
+    
+    
+    convenience init(_ fileWrapper: FileWrapper) {
+        let rootName = fileWrapper.preferredFilename ?? "root"
+        self.init(value: FileSystemItem(directory: rootName))
+        self.initDirAsFileSystemItem(rootName)
+
+        guard let childFileWrappers = fileWrapper.fileWrappers else { return } // no sub-directories/sub-files
+        
+        for key in childFileWrappers.keys {
+            guard let childFileWrapper = childFileWrappers[key] else { continue }
+            guard let childNode = TreeNode.init(preferredFilename: key, childFileWrapper) else { continue }
+            addChildwithFileWrapper(childNode)
+        }
+    }
+    
+    convenience init?(preferredFilename: String,_ fileWrapper: FileWrapper) {
+        if fileWrapper.isDirectory {
+            self.init(value: .init(directory: preferredFilename))
+            self.initDirAsFileSystemItem(preferredFilename)
+            
+            guard let childFileWrappers = fileWrapper.fileWrappers else { return }
+            for key in childFileWrappers.keys {
+                guard let childFileWrapper = childFileWrappers[key] else { continue }
+                guard let childNode = TreeNode.init(preferredFilename: key, childFileWrapper) else { continue }
+                addChildwithFileWrapper(childNode)
+            }
+            return
+        } else if fileWrapper.isRegularFile,
+                  preferredFilename.hasSuffix(".txt"),
+                  let textData = fileWrapper.regularFileContents,
+                  let text = String(data: textData, encoding: .utf8) {
+            self.init(value: .init(filename: preferredFilename, text: text))
+            self.fileWrapper = FileWrapper(regularFileWithContents: text.data(using: .utf8)!)
+            self.fileWrapper.preferredFilename = preferredFilename
+            return
+        }
+        return nil
+    }
+    
     var fileWrapper: FileWrapper {
         get {
             guard let fileWrapper = dic["FileWrapper"] as? FileWrapper else { fatalError("FileSystemItem without FileWrapper") }
             return fileWrapper
         }
-        set {
-            self.dic["FileWrapper"] = newValue
-        }
+        set { self.dic["FileWrapper"] = newValue }
     }
     
-    func initRootDirAsFileSystemItem(_ dirName: String) {
+    func initDirAsFileSystemItem(_ dirName: String) {
         self.fileWrapper = FileWrapper(directoryWithFileWrappers: [:])
         self.fileWrapper.preferredFilename = dirName
     }
@@ -36,13 +77,18 @@ extension TreeNode where T == FileSystemItem {
     }
     
     @discardableResult
-    func addTextFile(fileName: String, text: String, index: Int = -1) -> TreeNode<FileSystemItem> {
+    func addTextFile(fileName: String, text: String, index: Int = -1, fileWrapper: FileWrapper?) -> TreeNode<FileSystemItem> {
         let textItem = FileSystemItem(filename: fileName, text: text)
         let textNode = TreeNode(value: textItem)
-        textNode.fileWrapper = FileWrapper(regularFileWithContents: text.data(using: .utf8)!)
-        textNode.fileWrapper.preferredFilename = fileName
+
+        if let fileWrapper {
+            textNode.fileWrapper = fileWrapper
+        } else {
+            textNode.fileWrapper = FileWrapper(regularFileWithContents: text.data(using: .utf8)!)
+            textNode.fileWrapper.preferredFilename = fileName
+        }
         addChild(textNode, index: index)
-        fileWrapper.addFileWrapper(textNode.fileWrapper)
+        self.fileWrapper.addFileWrapper(textNode.fileWrapper)
         return textNode
     }
     
@@ -69,10 +115,10 @@ extension TreeNode where T == FileSystemItem {
         }
     }
     
-//    func addChildwithFileWrapper(_ node: TreeNode<T>, index: Int = -1) {
-//        addChild(node, index: index)
-//        self.value.fileWrapper.addFileWrapper(node.value.fileWrapper)
-//    }
+    func addChildwithFileWrapper(_ node: TreeNode<T>, index: Int = -1) {
+        addChild(node, index: index)
+        self.fileWrapper.addFileWrapper(node.fileWrapper)
+    }
 //
 //    func removeChildwithFileWrapper(_ node: TreeNode<T>) {
 //        removeChild(node)
