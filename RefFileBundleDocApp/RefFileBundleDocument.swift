@@ -34,8 +34,8 @@ class RefFileBundleDocument: ReferenceFileDocument {
         
         rootNode = TreeNode(value: .init(directory: "root"))
         rootNode.initDirAsFileSystemItem("root")
-        rootNode.addTextFile(fileName: Self.text1Key, text: "HelloText1", fileWrapper: nil)
-        rootNode.addTextFile(fileName: Self.text2Key, text: "WorldText2", fileWrapper: nil)
+        rootNode.addTextFile(fileName: Self.text1Key, text: "HelloText1")
+        rootNode.addTextFile(fileName: Self.text2Key, text: "WorldText2")
     }
 
     required init(configuration: ReadConfiguration) throws {
