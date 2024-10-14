@@ -10,11 +10,7 @@ import SDSMacros
 import SDSDataStructure
 
 public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
-    enum NodeType {
-        case directory, txtFile, binFile
-    }
     public let id = UUID()
-    let type: NodeType
     var filename: String
 
     @IsCheckEnum
@@ -26,19 +22,16 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
     var content: FileData
 
     init(directory dirname: String) {
-        self.type = .directory
         self.content = .directory
         self.filename = dirname
     }
 
     init(filename: String, text: String) {
-        self.type = .txtFile
         self.filename = filename
         self.content = .txtFile(text, text.data(using: .utf8)!)
     }
     
     init(filename: String, data: Data) {
-        self.type = .binFile
         self.filename = filename
         self.content = .binFile(data)
     }
