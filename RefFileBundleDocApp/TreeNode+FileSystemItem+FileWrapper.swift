@@ -12,7 +12,7 @@ extension TreeNode where T == FileSystemItem {
     var isDirectory: Bool { self.value.content.isDirectory }
     var isTextFile: Bool { self.value.content.isTxtFile }
 
-    convenience init(preferredFilename: String,_ fileWrapper: FileWrapper) {
+    convenience init(preferredFilename: String,_ fileWrapper: FileWrapper, extraTextSuffixes: [String] = []) {
         if fileWrapper.isDirectory {
             self.init(value: .init(directory: preferredFilename))
             self.fileWrapper = fileWrapper
@@ -25,7 +25,7 @@ extension TreeNode where T == FileSystemItem {
             }
             return
         } else if fileWrapper.isRegularFile {
-            if let content = FileSystemItem(filename: preferredFilename, fileWrapper: fileWrapper) {
+            if let content = FileSystemItem(filename: preferredFilename, fileWrapper: fileWrapper, extraTextSuffixes: extraTextSuffixes) {
                 self.init(value: content)
                 self.fileWrapper = fileWrapper
                 return

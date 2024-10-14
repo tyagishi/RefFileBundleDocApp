@@ -9,10 +9,7 @@ import Foundation
 import SDSMacros
 import SDSDataStructure
 import SDSStringExtension
-
-extension FileSystemItem {
-    public static let txtFileSuffixes = ["txt", "md"]
-}
+import UniformTypeIdentifiers
 
 public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
     public let id = UUID()
@@ -42,14 +39,24 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
     }
 
     // init with file type detection
-    convenience init?(filename: String, fileWrapper: FileWrapper) {
+    convenience init?(filename: String, fileWrapper: FileWrapper, extraTextSuffixes: [String] = []) {
         guard let fileData = fileWrapper.regularFileContents else { return nil }
-        if let suffix = filename.dotSuffix,
-           Self.txtFileSuffixes.contains(suffix.lowercased()),
-           let text = String(data: fileData, encoding: .utf8) {
-            self.init(filename: filename, text: text)
-            return
+        if let subSuffix = filename.dotSuffix {
+            let suffix = String(subSuffix)
+
+            if let utType = UTType(filenameExtension: suffix),
+               utType.conforms(to: .plainText),
+               let text = String(data: fileData, encoding: .utf8) {
+                self.init(filename: filename, text: text)
+                return
+            } else if extraTextSuffixes.contains(suffix),
+                      let text = String(data: fileData, encoding: .utf8) {
+                self.init(filename: filename, text: text)
+                return
+            }
         }
+
+        // no way to detect file type without suffix
         self.init(filename: filename, data: fileData)
         return
     }
