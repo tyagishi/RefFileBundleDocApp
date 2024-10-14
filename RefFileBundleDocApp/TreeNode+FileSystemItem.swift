@@ -98,7 +98,7 @@ extension TreeNode where T == FileSystemItem {
             for child in children {
                 child.updateFileWrapper()
             }
-        case .txtFile(let string, let data):
+        case .txtFile(_, let data):
             if let fwData = self.fileWrapper.regularFileContents,
                data != fwData {
                 let fileWrapper = FileWrapper(regularFileWithContents: data)
