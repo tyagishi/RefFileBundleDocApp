@@ -44,16 +44,20 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
         if let subSuffix = filename.dotSuffix {
             let suffix = String(subSuffix)
 
-            if let utType = UTType(filenameExtension: suffix),
-               utType.conforms(to: .plainText),
-               let text = String(data: fileData, encoding: .utf8) {
-                self.init(filename: filename, text: text)
-                return
-            } else if extraTextSuffixes.contains(suffix),
+            // try to check whether file can be handled as text file
+            if extraTextSuffixes.contains(suffix),
                       let text = String(data: fileData, encoding: .utf8) {
                 self.init(filename: filename, text: text)
                 return
+            } else if let utType = UTType(filenameExtension: suffix) {
+                if utType.conforms(to: .plainText),
+                   let text = String(data: fileData, encoding: .utf8) {
+                    self.init(filename: filename, text: text)
+                    return
+                }
             }
+
+            // not text file, so handle it as binday file
         }
 
         // no way to detect file type without suffix
