@@ -11,23 +11,7 @@ import SDSDataStructure
 extension TreeNode where T == FileSystemItem {
     var isDirectory: Bool { self.value.content.isDirectory }
     var isTextFile: Bool { self.value.content.isTxtFile }
-    
-    
-    
-    convenience init(_ fileWrapper: FileWrapper) {
-        let rootName = fileWrapper.preferredFilename ?? "root"
-        self.init(value: FileSystemItem(directory: rootName))
-        self.initDirAsFileSystemItem(rootName)
 
-        guard let childFileWrappers = fileWrapper.fileWrappers else { return } // no sub-directories/sub-files
-        
-        for key in childFileWrappers.keys {
-            guard let childFileWrapper = childFileWrappers[key] else { continue }
-            guard let childNode = TreeNode.init(preferredFilename: key, childFileWrapper) else { continue }
-            addChildwithFileWrapper(childNode)
-        }
-    }
-    
     convenience init?(preferredFilename: String,_ fileWrapper: FileWrapper) {
         if fileWrapper.isDirectory {
             self.init(value: .init(directory: preferredFilename))

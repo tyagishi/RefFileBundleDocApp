@@ -45,7 +45,8 @@ class RefFileBundleDocument: ReferenceFileDocument {
         let rootFileWrapper = configuration.file
         guard rootFileWrapper.isDirectory else { fatalError("unknown document struct, root should be directory") }
 
-        rootNode = TreeNode(rootFileWrapper)
+        guard let rootNode = TreeNode(preferredFilename: "root", rootFileWrapper) else { fatalError("failed to read filewrapper") }
+        self.rootNode = rootNode
     }
 
     func snapshot(contentType: UTType) throws -> TreeNode<FileSystemItem> {
