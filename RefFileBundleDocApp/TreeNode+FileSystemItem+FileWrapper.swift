@@ -12,28 +12,26 @@ extension TreeNode where T == FileSystemItem {
     var isDirectory: Bool { self.value.content.isDirectory }
     var isTextFile: Bool { self.value.content.isTxtFile }
 
-    convenience init?(preferredFilename: String,_ fileWrapper: FileWrapper) {
+    convenience init(preferredFilename: String,_ fileWrapper: FileWrapper) {
         if fileWrapper.isDirectory {
             self.init(value: .init(directory: preferredFilename))
-            self.initDirAsFileSystemItem(preferredFilename)
+            self.fileWrapper = fileWrapper
             
             guard let childFileWrappers = fileWrapper.fileWrappers else { return }
             for key in childFileWrappers.keys {
                 guard let childFileWrapper = childFileWrappers[key] else { continue }
-                guard let childNode = TreeNode.init(preferredFilename: key, childFileWrapper) else { continue }
+                let childNode = TreeNode.init(preferredFilename: key, childFileWrapper)
                 addChildwithFileWrapper(childNode)
             }
             return
-        } else if fileWrapper.isRegularFile,
-                  preferredFilename.hasSuffix(".txt"),
-                  let textData = fileWrapper.regularFileContents,
-                  let text = String(data: textData, encoding: .utf8) {
-            self.init(value: .init(filename: preferredFilename, text: text))
-            self.fileWrapper = FileWrapper(regularFileWithContents: text.data(using: .utf8)!)
-            self.fileWrapper.preferredFilename = preferredFilename
-            return
+        } else if fileWrapper.isRegularFile {
+            if let content = FileSystemItem(filename: preferredFilename, fileWrapper: fileWrapper) {
+                self.init(value: content)
+                self.fileWrapper = fileWrapper
+                return
+            }
         }
-        return nil
+        fatalError("unsupported fileWrapper type")
     }
     
     var fileWrapper: FileWrapper {
@@ -42,11 +40,6 @@ extension TreeNode where T == FileSystemItem {
             return fileWrapper
         }
         set { self.dic["FileWrapper"] = newValue }
-    }
-    
-    func initDirAsFileSystemItem(_ dirName: String) {
-        self.fileWrapper = FileWrapper(directoryWithFileWrappers: [:])
-        self.fileWrapper.preferredFilename = dirName
     }
     
     @discardableResult
@@ -110,20 +103,5 @@ extension TreeNode where T == FileSystemItem {
             parent.addFileWrapper(newFileWapper)
         }
         self.fileWrapper = newFileWapper
-    }
-
-    var filename: String {
-        return self.value.filename
-    }
-    var text: String? {
-        get {
-            guard let (text, _) = self.value.content.txtFileValues else { return nil }
-            return text
-        }
-        set {
-            guard self.value.content.isTxtFile,
-                  let newString = newValue else { return }
-            self.value.setText(newString)
-        }
     }
 }

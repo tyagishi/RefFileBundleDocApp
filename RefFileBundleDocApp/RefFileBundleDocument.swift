@@ -32,8 +32,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
     init() {
         OSLog.log.debug(#function)
         
-        rootNode = TreeNode(value: .init(directory: "root"))
-        rootNode.initDirAsFileSystemItem("root")
+        rootNode = TreeNode(preferredFilename: "root", FileWrapper(directoryWithFileWrappers: [:]))
         rootNode.addTextFile(fileName: Self.text1Key, text: "HelloText1")
         rootNode.addTextFile(fileName: Self.text2Key, text: "WorldText2")
     }
@@ -45,8 +44,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
         let rootFileWrapper = configuration.file
         guard rootFileWrapper.isDirectory else { fatalError("unknown document struct, root should be directory") }
 
-        guard let rootNode = TreeNode(preferredFilename: "root", rootFileWrapper) else { fatalError("failed to read filewrapper") }
-        self.rootNode = rootNode
+        rootNode = TreeNode(preferredFilename: "root", rootFileWrapper)
     }
 
     func snapshot(contentType: UTType) throws -> TreeNode<FileSystemItem> {

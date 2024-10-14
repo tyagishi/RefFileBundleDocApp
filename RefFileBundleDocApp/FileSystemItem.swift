@@ -36,6 +36,20 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
         self.content = .binFile(data)
     }
 
+    // init with file type detection
+    convenience init?(filename: String, fileWrapper: FileWrapper) {
+        guard let fileData = fileWrapper.regularFileContents else { return nil }
+        if filename.hasSuffix(".txt"),
+           let text = String(data: fileData, encoding: .utf8) {
+            self.init(filename: filename, text: text)
+            return
+        }
+        self.init(filename: filename, data: fileData)
+        return
+    }
+}
+
+extension FileSystemItem {
     func setText(_ newText: String) {
         self.content = .txtFile(newText, newText.data(using: .utf8)!)
     }
