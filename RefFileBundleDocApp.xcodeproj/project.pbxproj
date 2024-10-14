@@ -17,6 +17,7 @@
 		36A171CF2CBB8973005874D6 /* FileSystemItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A171CE2CBB8973005874D6 /* FileSystemItem.swift */; };
 		36A171D12CBB9424005874D6 /* TreeNode+FileSystemItem+FileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A171D02CBB9424005874D6 /* TreeNode+FileSystemItem+FileWrapper.swift */; };
 		36A171D32CBCB142005874D6 /* TreeNode+FileSystemItem+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A171D22CBCB142005874D6 /* TreeNode+FileSystemItem+Content.swift */; };
+		36A171E32CBCBC1D005874D6 /* SDSStringExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 36A171E22CBCBC1D005874D6 /* SDSStringExtension */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36A171CD2CBB87E8005874D6 /* SDSMacros in Frameworks */,
+				36A171E32CBCBC1D005874D6 /* SDSStringExtension in Frameworks */,
 				36A171CA2CBB7D53005874D6 /* SDSDataStructure in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,7 +116,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					3697DB5F2BBD056000279CDD = {
@@ -134,6 +136,7 @@
 			packageReferences = (
 				36A171C82CBB7D53005874D6 /* XCRemoteSwiftPackageReference "SDSDataStructure" */,
 				36A171CB2CBB87E8005874D6 /* XCRemoteSwiftPackageReference "SDSMacros" */,
+				36A171E12CBCBC1D005874D6 /* XCRemoteSwiftPackageReference "SDSStringExtension" */,
 			);
 			productRefGroup = 3697DB612BBD056000279CDD /* Products */;
 			projectDirPath = "";
@@ -409,6 +412,14 @@
 				minimumVersion = 1.0.5;
 			};
 		};
+		36A171E12CBCBC1D005874D6 /* XCRemoteSwiftPackageReference "SDSStringExtension" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tyagishi/SDSStringExtension";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -421,6 +432,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 36A171CB2CBB87E8005874D6 /* XCRemoteSwiftPackageReference "SDSMacros" */;
 			productName = SDSMacros;
+		};
+		36A171E22CBCBC1D005874D6 /* SDSStringExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 36A171E12CBCBC1D005874D6 /* XCRemoteSwiftPackageReference "SDSStringExtension" */;
+			productName = SDSStringExtension;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
