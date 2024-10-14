@@ -17,11 +17,11 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
 
     @IsCheckEnum
     @AssociatedValueEnum
-    public enum FileData {
+    public enum FileContent {
         case directory, txtFile(String, Data), binFile(Data)
     }
     
-    var content: FileData
+    var content: FileContent
 
     init(directory dirname: String) {
         self.content = .directory
