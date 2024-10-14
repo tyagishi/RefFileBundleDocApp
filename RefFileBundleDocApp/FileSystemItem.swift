@@ -11,7 +11,7 @@ import SDSDataStructure
 import SDSStringExtension
 
 extension FileSystemItem {
-    public static let txtFileSuffixes = [".txt", ".md"]
+    public static let txtFileSuffixes = ["txt", "md"]
 }
 
 public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
