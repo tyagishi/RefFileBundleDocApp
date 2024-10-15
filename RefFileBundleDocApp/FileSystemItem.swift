@@ -21,7 +21,9 @@ public enum FileSystemItemChange {
 @DidChangeObject<FileSystemItemChange>
 public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
     public let id = UUID()
-    var filename: String
+    public var filename: String {
+        didSet { self.objectDidChange.send(.filenameChanged(oldValue)) }
+    }
 
     @IsCheckEnum
     @AssociatedValueEnum
@@ -29,25 +31,25 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
         case directory, txtFile(String, Data), binFile(Data)
     }
     
-    var content: FileContent
+    public private(set) var content: FileContent
 
-    init(directory dirname: String) {
+    public init(directory dirname: String) {
         self.content = .directory
         self.filename = dirname
     }
 
-    init(filename: String, text: String) {
+    public init(filename: String, text: String) {
         self.filename = filename
         self.content = .txtFile(text, text.data(using: .utf8)!)
     }
     
-    init(filename: String, data: Data) {
+    public init(filename: String, data: Data) {
         self.filename = filename
         self.content = .binFile(data)
     }
 
     // init with file type detection
-    convenience init?(filename: String, fileWrapper: FileWrapper, extraTextSuffixes: [String] = []) {
+    public convenience init?(filename: String, fileWrapper: FileWrapper, extraTextSuffixes: [String] = []) {
         guard let fileData = fileWrapper.regularFileContents else { return nil }
         if let subSuffix = filename.dotSuffix {
             let suffix = String(subSuffix)
@@ -75,15 +77,11 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
 }
 
 extension FileSystemItem {
-    func setFilename(_ newFilename: String) {
-        self.filename = newFilename
-        self.objectDidChange.send(.filenameChanged(newFilename))
-    }
-    func setText(_ newText: String) {
+    public func setText(_ newText: String) {
         self.content = .txtFile(newText, newText.data(using: .utf8)!)
         self.objectDidChange.send(.textChagned(newText))
     }
-    func setData(_ newData: Data) {
+    public func setData(_ newData: Data) {
         self.content = .binFile(newData)
         self.objectDidChange.send(.contentChanged(newData))
     }
