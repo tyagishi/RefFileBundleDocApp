@@ -47,8 +47,7 @@ extension RefFileBundleDocument {
             node1?.text ?? "No Node1"
         }
         set(newValue) {
-            guard let node1 = node1 else { return }
-            node1.text = newValue
+            node1?.text = newValue
         }
     }
     var text2: String {
@@ -56,8 +55,7 @@ extension RefFileBundleDocument {
             node2?.text ?? "No Node2"
         }
         set(newValue) {
-            guard let node2 = node2 else { return }
-            node2.text = newValue
+            node2?.text = newValue
         }
     }
 }
