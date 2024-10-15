@@ -23,6 +23,7 @@
 		3697DB6B2BBD056200279CDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3697DB6C2BBD056200279CDD /* RefFileBundleDocApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RefFileBundleDocApp.entitlements; sourceTree = "<group>"; };
 		3697DB6E2BBD056200279CDD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		36B6D6802CBE922D0016A7BC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +40,7 @@
 		3697DB572BBD056000279CDD = {
 			isa = PBXGroup;
 			children = (
+				36B6D6802CBE922D0016A7BC /* README.md */,
 				3697DB622BBD056000279CDD /* RefFileBundleDocApp */,
 				3697DB612BBD056000279CDD /* Products */,
 			);
