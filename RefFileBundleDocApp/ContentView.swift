@@ -12,22 +12,27 @@ struct ContentView: View {
     @ObservedObject var document: RefFileBundleDocument
 
     var body: some View {
-        VStack {
-            TextField(text: Binding<String>(get: {
-                document.text1
-            }, set: {
-                document.text1 = $0
-            }), label: {
-                Text("Text1: ")
-            })
-            TextField(text: Binding<String>(get: {
-                document.text2
-            }, set: {
-                document.text2 = $0
-            }), label: {
-                Text("Text2: ")
-            })
-        }
+        NavigationSplitView(sidebar: {
+            SidebarView(document: document)
+        }, detail: {
+            Text("Detail View")
+        })
+//        VStack {
+//            TextField(text: Binding<String>(get: {
+//                document.text1
+//            }, set: {
+//                document.text1 = $0
+//            }), label: {
+//                Text("Text1: ")
+//            })
+//            TextField(text: Binding<String>(get: {
+//                document.text2
+//            }, set: {
+//                document.text2 = $0
+//            }), label: {
+//                Text("Text2: ")
+//            })
+//        }
     }
 }
 
