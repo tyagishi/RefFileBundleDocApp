@@ -28,5 +28,15 @@ final class RefFileBundleDocAppTests: XCTestCase {
         XCTAssertEqual(utType, .plainText)
         XCTAssertEqual(utType.conforms(to: .text), true)
     }
-
+    
+    func test_defer() async throws {
+        a()
+    }
+    
+    func a() {
+        var a = 1
+        defer { print(a) } // note: does not capture variables
+        a += 1
+        return
+    }
 }

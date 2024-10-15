@@ -10,7 +10,15 @@ import SDSMacros
 import SDSDataStructure
 import SDSStringExtension
 import UniformTypeIdentifiers
+import Combine
 
+public enum FileSystemItemChange {
+    case filenameChanged(String)
+    case contentChanged(Data)
+    case textChagned(String)
+}
+
+@DidChangeObject<FileSystemItemChange>
 public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
     public let id = UUID()
     var filename: String
@@ -67,7 +75,16 @@ public class FileSystemItem: Identifiable, ObservableObject { // Equatable?
 }
 
 extension FileSystemItem {
+    func setFilename(_ newFilename: String) {
+        self.filename = newFilename
+        self.objectDidChange.send(.filenameChanged(newFilename))
+    }
     func setText(_ newText: String) {
         self.content = .txtFile(newText, newText.data(using: .utf8)!)
+        self.objectDidChange.send(.textChagned(newText))
+    }
+    func setData(_ newData: Data) {
+        self.content = .binFile(newData)
+        self.objectDidChange.send(.contentChanged(newData))
     }
 }
