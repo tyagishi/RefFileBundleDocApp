@@ -25,6 +25,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
     static var readableContentTypes: [UTType] { [.refFileBundle] }
     typealias Snapshot = TreeNode<FileSystemItem>
 
+    var fileURL: URL? = nil
     var rootNode: TreeNode<FileSystemItem>
     
     init() {

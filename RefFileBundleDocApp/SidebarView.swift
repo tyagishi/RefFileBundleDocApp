@@ -14,18 +14,14 @@ struct SidebarView: View {
     var body: some View {
         List(selection: $selectedNodeID, content: {
             TreeNodeView(node: document.rootNode)
+                .environmentObject(document)
         })
         .listStyle(.sidebar)
-        .contextMenu(menuItems: {
-            Button(action: {
-                document.objectWillChange.send()
-                document.rootNode.addDirectory(dirName: Date().description)
-            }, label: { Text("Add Directory") })
-        })
     }
 }
 
 struct TreeNodeView: View {
+    @EnvironmentObject var document: RefFileBundleDocument
     @ObservedObject var node: TreeNode<FileSystemItem>
     
     var body: some View {
@@ -56,11 +52,37 @@ struct TreeNodeView: View {
             }.tag(node.id)
             .contextMenu(menuItems: {
                 Button(action: {
-                    let attrs = node.fileWrapper.fileAttributes
-                    print(attrs)
-                }, label: { Text("Add Gray") })
+                    if let filePath = document.fileURL {
+                        let nodePath = node.filePath(under: filePath)
+                        if let values = try? nodePath.resourceValues(forKeys: [.tagNamesKey]) {
+                            print("\(values.tagNames?.description ?? "notag")")
+                        }
+                    }
+                }, label: { Text("Check Tags") })
             })
         }
     }
 }
 
+extension TreeNode where T == FileSystemItem {
+    func filePath(under: URL) -> URL {
+        var filePath = under
+        for node in nodesFromRoot {
+            guard !node.isRoot else { continue }
+            filePath.append(path: node.filename)
+        }
+        return filePath
+    }
+}
+
+extension TreeNode {
+    var nodesFromRoot: [TreeNode]{
+        var result = [self]
+        var current = self
+        while let parent = current.parent {
+            result.insert(parent, at: 0)
+            current = parent
+        }
+        return result
+    }
+}

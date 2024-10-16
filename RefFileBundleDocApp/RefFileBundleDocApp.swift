@@ -17,7 +17,7 @@ struct RefFileBundleDocApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: { RefFileBundleDocument.init() } , editor: { config in
             let _ = { OSLog.log.debug("DocumentGroup with \(config.fileURL?.absoluteString ?? "nil")") }()
-            ContentView(document: config.document)
+            ContentView(document: config.document, path: config.fileURL)
         })
     }
 }

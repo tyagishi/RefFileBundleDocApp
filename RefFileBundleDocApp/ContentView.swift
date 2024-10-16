@@ -10,8 +10,15 @@ import SDSDataStructure
 
 struct ContentView: View {
     @ObservedObject var document: RefFileBundleDocument
+    let path: URL?
     @State private var selectedNodeID: TreeNode<FileSystemItem>.ID?
 
+    init(document: RefFileBundleDocument, path: URL?) {
+        self.document = document
+        self.path = path
+        self.document.fileURL = path
+    }
+    
     var body: some View {
         NavigationSplitView(sidebar: {
             SidebarView(document: document, selectedNodeID: $selectedNodeID)
@@ -27,5 +34,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(document: RefFileBundleDocument())
+    ContentView(document: RefFileBundleDocument(), path: nil)
 }
