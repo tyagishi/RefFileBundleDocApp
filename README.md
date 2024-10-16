@@ -11,4 +11,5 @@
 ## branch: filesystem
 - document-based app
 - document can contain files like file-system
+- text editor for text file
 - at save, check changes in file then update FileWrapper
