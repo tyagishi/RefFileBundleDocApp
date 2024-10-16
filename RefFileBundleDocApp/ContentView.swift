@@ -10,57 +10,22 @@ import SDSDataStructure
 
 struct ContentView: View {
     @ObservedObject var document: RefFileBundleDocument
+    @State private var selectedNodeID: TreeNode<FileSystemItem>.ID?
 
     var body: some View {
         NavigationSplitView(sidebar: {
-            SidebarView(document: document)
+            SidebarView(document: document, selectedNodeID: $selectedNodeID)
         }, detail: {
-            Text("Detail View")
+            if let selectedNodeID = selectedNodeID,
+               let node = document.rootNode.search(match: { $0.id == selectedNodeID }) {
+                DetailView(node: node)
+            } else {
+                Text("No selection")
+            }
         })
-//        VStack {
-//            TextField(text: Binding<String>(get: {
-//                document.text1
-//            }, set: {
-//                document.text1 = $0
-//            }), label: {
-//                Text("Text1: ")
-//            })
-//            TextField(text: Binding<String>(get: {
-//                document.text2
-//            }, set: {
-//                document.text2 = $0
-//            }), label: {
-//                Text("Text2: ")
-//            })
-//        }
     }
 }
 
 #Preview {
     ContentView(document: RefFileBundleDocument())
-}
-
-extension RefFileBundleDocument {
-    var node1: TreeNode<FileSystemItem>? {
-        rootNode.search(match: { $0.filename == Self.text1Key })
-    }
-    var node2: TreeNode<FileSystemItem>? {
-        rootNode.search(match: { $0.filename == Self.text2Key })
-    }
-    var text1: String {
-        get {
-            node1?.text ?? "No Node1"
-        }
-        set(newValue) {
-            node1?.text = newValue
-        }
-    }
-    var text2: String {
-        get {
-            node2?.text ?? "No Node2"
-        }
-        set(newValue) {
-            node2?.text = newValue
-        }
-    }
 }

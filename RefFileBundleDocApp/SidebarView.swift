@@ -10,7 +10,7 @@ import SDSDataStructure
 
 struct SidebarView: View {
     @ObservedObject var document: RefFileBundleDocument
-    @State private var selectedNodeID: TreeNode<FileSystemItem>.ID?
+    @Binding var selectedNodeID: TreeNode<FileSystemItem>.ID?
     var body: some View {
         List(selection: $selectedNodeID, content: {
             TreeNodeView(node: document.rootNode)
@@ -54,6 +54,12 @@ struct TreeNodeView: View {
                 Image(systemName: "document")
                 Text(node.filename)
             }.tag(node.id)
+            .contextMenu(menuItems: {
+                Button(action: {
+                    let attrs = node.fileWrapper.fileAttributes
+                    print(attrs)
+                }, label: { Text("Add Gray") })
+            })
         }
     }
 }

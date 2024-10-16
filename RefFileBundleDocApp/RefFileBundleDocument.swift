@@ -24,8 +24,6 @@ extension UTType {
 class RefFileBundleDocument: ReferenceFileDocument {
     static var readableContentTypes: [UTType] { [.refFileBundle] }
     typealias Snapshot = TreeNode<FileSystemItem>
-    static let text1Key = "Text1Key.txt"
-    static let text2Key = "Text2Key.txt"
 
     var rootNode: TreeNode<FileSystemItem>
     
@@ -33,8 +31,9 @@ class RefFileBundleDocument: ReferenceFileDocument {
         OSLog.log.debug(#function)
         
         rootNode = TreeNode(preferredFilename: "root", FileWrapper(directoryWithFileWrappers: [:]))
-        rootNode.addTextFile(fileName: Self.text1Key, text: "HelloText1")
-        rootNode.addTextFile(fileName: Self.text2Key, text: "WorldText2")
+        // initial document content
+        rootNode.addTextFile(fileName: "Text1Key.txt", text: "HelloText1")
+        rootNode.addTextFile(fileName: "Text2Key.txt", text: "WorldText2")
     }
 
     required init(configuration: ReadConfiguration) throws {
