@@ -528,7 +528,7 @@
 			repositoryURL = "https://github.com/tyagishi/SDSDataStructure";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.6.4;
+				minimumVersion = 4.0.4;
 			};
 		};
 		36A171CB2CBB87E8005874D6 /* XCRemoteSwiftPackageReference "SDSMacros" */ = {

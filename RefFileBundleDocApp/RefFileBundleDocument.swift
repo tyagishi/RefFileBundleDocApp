@@ -49,14 +49,12 @@ class RefFileBundleDocument: ReferenceFileDocument {
 
     func snapshot(contentType: UTType) throws -> TreeNode<FileSystemItem> {
         OSLog.log.debug(#function)
-        return rootNode
+        self.rootNode.updateFileWrapper()
+        return try rootNode.snapshot(contentType: contentType)
     }
     
     func fileWrapper(snapshot: TreeNode<FileSystemItem>, configuration: WriteConfiguration) throws -> FileWrapper {
         OSLog.log.debug(#function)
-        
-        rootNode.updateFileWrapper()
-
-        return rootNode.fileWrapper
+        return snapshot.fileWrapper
     }
 }
