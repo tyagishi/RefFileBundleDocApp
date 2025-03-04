@@ -12,3 +12,8 @@
 - document-based app
 - document can contain files like file-system
 - at save, check changes in file then update FileWrapper
+
+## branch: filesystemWithGRDB
+- document-based app
+- document has "grdb.sqlite" file for GRDB file
+- document still has other text files
