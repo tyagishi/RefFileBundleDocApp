@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36510C982D772B1900335387 /* GRDBLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36510C972D772B1900335387 /* GRDBLog.swift */; };
 		3697DB642BBD056000279CDD /* RefFileBundleDocApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB632BBD056000279CDD /* RefFileBundleDocApp.swift */; };
 		3697DB662BBD056000279CDD /* RefFileBundleDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB652BBD056000279CDD /* RefFileBundleDocument.swift */; };
 		3697DB682BBD056000279CDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697DB672BBD056000279CDD /* ContentView.swift */; };
@@ -18,6 +19,7 @@
 		36A171E32CBCBC1D005874D6 /* SDSStringExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 36A171E22CBCBC1D005874D6 /* SDSStringExtension */; };
 		36A171F42CBE6A74005874D6 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A171F32CBE6A74005874D6 /* SidebarView.swift */; };
 		36C8C53F2CBF524F00128B02 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C8C53E2CBF524F00128B02 /* DetailView.swift */; };
+		36E73DF22D73FB7800B13A49 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 36E73DF12D73FB7800B13A49 /* GRDB */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		36510C972D772B1900335387 /* GRDBLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBLog.swift; sourceTree = "<group>"; };
 		3697DB602BBD056000279CDD /* RefFileBundleDocApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RefFileBundleDocApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3697DB632BBD056000279CDD /* RefFileBundleDocApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefFileBundleDocApp.swift; sourceTree = "<group>"; };
 		3697DB652BBD056000279CDD /* RefFileBundleDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefFileBundleDocument.swift; sourceTree = "<group>"; };
@@ -57,6 +60,7 @@
 				36A171CD2CBB87E8005874D6 /* SDSMacros in Frameworks */,
 				36A171E32CBCBC1D005874D6 /* SDSStringExtension in Frameworks */,
 				36A171CA2CBB7D53005874D6 /* SDSDataStructure in Frameworks */,
+				36E73DF22D73FB7800B13A49 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,11 +100,12 @@
 				3697DB672BBD056000279CDD /* ContentView.swift */,
 				36A171F32CBE6A74005874D6 /* SidebarView.swift */,
 				36C8C53E2CBF524F00128B02 /* DetailView.swift */,
+				36510C972D772B1900335387 /* GRDBLog.swift */,
+				36A171D22CBCB142005874D6 /* TreeNode+FileSystemItem+Content.swift */,
 				3697DB692BBD056200279CDD /* Assets.xcassets */,
 				3697DB6B2BBD056200279CDD /* Info.plist */,
 				3697DB6C2BBD056200279CDD /* RefFileBundleDocApp.entitlements */,
 				3697DB6D2BBD056200279CDD /* Preview Content */,
-				36A171D22CBCB142005874D6 /* TreeNode+FileSystemItem+Content.swift */,
 			);
 			path = RefFileBundleDocApp;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 			mainGroup = 3697DB572BBD056000279CDD;
 			packageReferences = (
 				36A171C82CBB7D53005874D6 /* XCRemoteSwiftPackageReference "SDSDataStructure" */,
+				36E73DF02D73FB7800B13A49 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			productRefGroup = 3697DB612BBD056000279CDD /* Products */;
 			projectDirPath = "";
@@ -223,6 +229,7 @@
 			files = (
 				3697DB642BBD056000279CDD /* RefFileBundleDocApp.swift in Sources */,
 				36C8C53F2CBF524F00128B02 /* DetailView.swift in Sources */,
+				36510C982D772B1900335387 /* GRDBLog.swift in Sources */,
 				36A171D32CBCB142005874D6 /* TreeNode+FileSystemItem+Content.swift in Sources */,
 				36A171F42CBE6A74005874D6 /* SidebarView.swift in Sources */,
 				3697DB662BBD056000279CDD /* RefFileBundleDocument.swift in Sources */,
@@ -547,6 +554,14 @@
 				minimumVersion = 1.3.0;
 			};
 		};
+		36E73DF02D73FB7800B13A49 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -564,6 +579,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 36A171E12CBCBC1D005874D6 /* XCRemoteSwiftPackageReference "SDSStringExtension" */;
 			productName = SDSStringExtension;
+		};
+		36E73DF12D73FB7800B13A49 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 36E73DF02D73FB7800B13A49 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

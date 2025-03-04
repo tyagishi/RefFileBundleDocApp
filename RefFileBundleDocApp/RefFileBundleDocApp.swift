@@ -17,6 +17,7 @@ struct RefFileBundleDocApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: { RefFileBundleDocument.init() } , editor: { config in
             let _ = { OSLog.log.debug("DocumentGroup with \(config.fileURL?.absoluteString ?? "nil")") }()
+            let _ = { if let rootURL = config.fileURL { config.document.updateFileWrapper(with: rootURL) } }()
             ContentView(document: config.document, path: config.fileURL)
         })
     }
