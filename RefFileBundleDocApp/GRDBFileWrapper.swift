@@ -10,7 +10,7 @@ import GRDB
 import SDSDataStructure
 
 // based on https://stackoverflow.com/questions/66359387/swiftui-filedocument-using-sqlite-and-grdb
-class SqliteFileWrapper: FileWrapper, URLFileWrapper {
+class GRDBFileWrapper: FileWrapper, URLFileWrapper {
 
     var databaseQueue: DatabaseQueue
 

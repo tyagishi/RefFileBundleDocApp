@@ -38,7 +38,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
         rootNode.addTextFile(fileName: "Text1Key.txt", text: "HelloText1")
         rootNode.addTextFile(fileName: "Text2Key.txt", text: "WorldText2")
         
-        let sqliteFW = SqliteFileWrapper(fromDatabaseQueue: self.databaseQueue)
+        let sqliteFW = GRDBFileWrapper(fromDatabaseQueue: self.databaseQueue)
         rootNode.addPathDirectFile(fileName: "grdb.sqlite", path: nil, fileWrapper: sqliteFW)
         initDatabase()
     }
@@ -55,7 +55,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
         rootNode.setupTreeAlongFileWrappers(itemContentProvider: { (name, fw) in
             // "grdb.sqlite" file is the file for GRDB
             guard name == "grdb.sqlite" else { return nil }
-            let sqliteFW = SqliteFileWrapper(fromDatabaseQueue: self.databaseQueue)
+            let sqliteFW = GRDBFileWrapper(fromDatabaseQueue: self.databaseQueue)
             sqliteFW.preferredFilename = name
             sqliteFW.filename = name
             return (FileSystemItem(pathFilename: name), sqliteFW)
@@ -86,7 +86,7 @@ class RefFileBundleDocument: ReferenceFileDocument {
     func readSQLite(_ rootURL: URL) {
         guard let sqliteNode = rootNode.search(match: { $0.value.content.isPathDirectFile }) else { print("no sqlite node"); return }
         let sqlitePath = rootURL.appending(path: "grdb.sqlite")
-        guard let sqliteFW = sqliteNode.fileWrapper as? SqliteFileWrapper else { return }
+        guard let sqliteFW = sqliteNode.fileWrapper as? GRDBFileWrapper else { return }
         sqliteFW.readSQLite(sqlitePath)
     }
 

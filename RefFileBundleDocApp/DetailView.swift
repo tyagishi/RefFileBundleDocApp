@@ -19,7 +19,7 @@ struct DetailView: View {
         } else if let binding = node.textBinding {
             TextEditor(text: binding).padding()
         } else if node.value.content.isPathDirectFile,
-                  let fileWrapper = node.fileWrapper as? SqliteFileWrapper {
+                  let fileWrapper = node.fileWrapper as? GRDBFileWrapper {
             VStack {
                 HStack {
                     TextField(text: $message, label: { Text("Message" )})
@@ -51,7 +51,7 @@ extension TreeNode where T == FileSystemItem {
     }
 }
 
-extension SqliteFileWrapper {
+extension GRDBFileWrapper {
     var logs: [GRDBLog] {
         try! databaseQueue.read { db in
             try! GRDBLog.fetchAll(db).sorted(by: { $0.date > $1.date})
