@@ -89,5 +89,9 @@ class RefFileBundleDocument: ReferenceFileDocument {
         guard let sqliteFW = sqliteNode.fileWrapper as? SqliteFileWrapper else { return }
         sqliteFW.readSQLite(sqlitePath)
     }
+
+    public func updateFileWrapper(with fileURL: URL) {
+        rootNode.updatePathDirectFile(with: fileURL)
+    }
 }
 
